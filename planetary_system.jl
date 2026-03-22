@@ -53,8 +53,26 @@ But this does not explain non circular orbits
 md"""
 ## Next step in sophistication 
 ## version v.1.0
-Assume the sun does not move but the earth does. So now the equation is not easy to solve, it does have a close solution though (more later).
+Assume the sun does not move but the earth does. So now the equation is not easy to solve exactly. It does have a close solution though (more later).
 We will just write the equation and try to solve it numerically just for the heck of it.
+"""
+
+# ╔═╡ d3ac9188-0507-4baf-bed0-4966dc8d7707
+md"""
+So now the equation for the acceleration is $\frac{d^2r}{dt^2} = G \frac{m_{sun}}{r^2}$ but we are not assuming a circular orbit. The shape will be determined by the initial conditions for the position $r_0$ and velocity $v_0$, both vectors. 
+"""
+
+# ╔═╡ 89ac0a24-a533-474a-98c4-5f13c7bdaf38
+md"""
+This is a second order differential equation but we make the following change of variables:
+
+$z_1= x, z_2 = y, z_3 = \frac{dx}{dt}, z_4 = \frac{dy}{dt}$
+
+Writting this so that it looks like a first order differential equation:
+
+$\frac{dz_1}{dt}= z_2$
+
+$\frac{dz_2}{dt}= G \frac{m_{sun}}{\sqrt{x^2+y^2}}$
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -75,11 +93,13 @@ project_hash = "71853c6197a6a7f222db0f1978c7cb232b87c5ee"
 
 # ╔═╡ Cell order:
 # ╟─9d2c074d-3a3f-4ec5-8cde-5b6eab7a9d99
-# ╠═510d9158-2574-11f1-998c-954ac65d7cdf
+# ╟─510d9158-2574-11f1-998c-954ac65d7cdf
 # ╠═75f96237-a5f3-4f95-afa2-e1139ad0afc7
 # ╠═264bb58e-74e2-4224-bdbc-f8351fc9512a
 # ╠═da533c3c-881b-4404-af42-a88fe36671fb
 # ╟─03793a53-4864-40f0-8c76-a789065920f0
 # ╟─26380cc3-f445-45db-bde8-2dc128b14f59
+# ╠═d3ac9188-0507-4baf-bed0-4966dc8d7707
+# ╠═89ac0a24-a533-474a-98c4-5f13c7bdaf38
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

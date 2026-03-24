@@ -33,7 +33,8 @@ Finally from this we should get  $T =\frac{2\pi r}{v}$. So if given $m_2, r,$ an
 # ╔═╡ 75f96237-a5f3-4f95-afa2-e1139ad0afc7
 begin
 	# Physical constants
-	m_sun = 1.989e30 
+	m_sun = 1.989e30      # kg
+	m_earth = 5.972e24    # kg
 	G = 6.674e-11
 	r = 149.6e9
 	AU = 1.496e11
@@ -102,7 +103,7 @@ end
 # ╔═╡ 4f784b4e-10e0-448e-bb2b-4cfa0d9ebaa8
 begin
 	u0 = [r, 0, 0, v] 
-	t_span = [0.0, 60*60*24*365*2]
+	t_span = [0.0, 60*60*24*365*10]
 	nothing
 end
 
@@ -118,11 +119,24 @@ begin
 	x = [sol.u[i][1]/AU for i in 1:length(sol.t)]
 	y = [sol.u[i][2]/AU for i in 1:length(sol.t)]
 
-	plot(x, y, label="Orbit", xlabel="x", ylabel="y", title="Sun Earth System")
+	plot(x, y, 
+		 label="Orbit", xlabel="x (AU)", ylabel="y (AU)", title="Sun Earth System",
+		aspect_ratio=1)
 end
 
 # ╔═╡ 49219f60-eb27-4941-97f8-ac1eed03fcd4
-x
+begin
+	time = sol.t/(60*60*24*365)
+	kinetic_energy = [sol.u[i][1]^2+sol.u[i][2]^2 for i in 1:length(sol.t)]
+	kinetic_energy = (1/2) * m_earth * kinetic_energy
+	kinetic_energy/= kinetic_energy[1]
+	plot(time, kinetic_energy, 
+		 label="kinetic energy", xlabel="time (years)", ylabel="kinetic energy",
+		 title="RK solver")
+end
+
+# ╔═╡ 25f255be-b408-41a0-a197-4420852037e5
+
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2910,19 +2924,20 @@ version = "1.13.0+0"
 # ╔═╡ Cell order:
 # ╟─9d2c074d-3a3f-4ec5-8cde-5b6eab7a9d99
 # ╟─510d9158-2574-11f1-998c-954ac65d7cdf
-# ╠═75f96237-a5f3-4f95-afa2-e1139ad0afc7
-# ╠═264bb58e-74e2-4224-bdbc-f8351fc9512a
-# ╠═da533c3c-881b-4404-af42-a88fe36671fb
+# ╟─75f96237-a5f3-4f95-afa2-e1139ad0afc7
+# ╟─264bb58e-74e2-4224-bdbc-f8351fc9512a
+# ╟─da533c3c-881b-4404-af42-a88fe36671fb
 # ╟─03793a53-4864-40f0-8c76-a789065920f0
 # ╟─26380cc3-f445-45db-bde8-2dc128b14f59
 # ╟─d3ac9188-0507-4baf-bed0-4966dc8d7707
 # ╟─89ac0a24-a533-474a-98c4-5f13c7bdaf38
 # ╠═64b2e35a-9b37-456b-a8f2-4a1097a09cc2
-# ╠═4f5bf48f-f387-43f4-984a-739bb7229dfd
+# ╟─4f5bf48f-f387-43f4-984a-739bb7229dfd
 # ╠═4f784b4e-10e0-448e-bb2b-4cfa0d9ebaa8
 # ╠═7bbaddb9-f677-4686-97ed-2bf1413095ed
 # ╠═2f1f2179-ad92-4e46-b58e-40f8688b372e
-# ╠═7f8e3b0d-cb83-494e-ab5a-69391f92c07e
+# ╟─7f8e3b0d-cb83-494e-ab5a-69391f92c07e
 # ╠═49219f60-eb27-4941-97f8-ac1eed03fcd4
+# ╠═25f255be-b408-41a0-a197-4420852037e5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

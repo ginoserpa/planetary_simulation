@@ -1,5 +1,6 @@
 using DifferentialEquations
 using Plots
+using CairoMakie
 
 # Physical constants
 m_sun = 1.989e30      # kg
@@ -31,14 +32,18 @@ sol = solve(prob, RK4(), dt = 60*60*24)
 x = [sol.u[i][1]/AU for i in 1:length(sol.t)]
 y = [sol.u[i][2]/AU for i in 1:length(sol.t)]
 
-plot(x, y, 
-	 label="Orbit", xlabel="x (AU)", ylabel="y (AU)", title="Sun Earth System",
-	 aspect_ratio=1)
+lines(0:0.01:2*3.1415, sin;linewidth=2)
+
+
+
+#plot(x, y, 
+#	 label="Orbit", xlabel="x (AU)", ylabel="y (AU)", title="Sun Earth System",
+#	 aspect_ratio=1)
 
 time = sol.t/(60*60*24*365)
 kinetic_energy = [sol.u[i][1]^2+sol.u[i][2]^2 for i in 1:length(sol.t)]
 kinetic_energy = (1/2) * m_earth * kinetic_energy
 kinetic_energy/= kinetic_energy[1]
-plot(time, kinetic_energy, 
-	 label="kinetic energy", xlabel="time (years)", ylabel="kinetic energy",
-	 title="RK solver")
+#plot(time, kinetic_energy, 
+#	 label="kinetic energy", xlabel="time (years)", ylabel="kinetic energy",
+#	 title="RK solver")

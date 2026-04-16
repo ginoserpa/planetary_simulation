@@ -27,8 +27,11 @@ We know that for a particle in circular motion the acceleration has to be $a = \
 
 Putting the last two equations together we get: $v=\sqrt{\frac{G m_2}{r}}$
 
-Finally from this we should get  $T =\frac{2\pi r}{v}$. So if given $m_2, r,$ and $ G$ we can calculate the time for one orbit that better be close to $365$ days 
+Finally from this we should get  $T =\frac{2\pi r}{v}$. So if given $m_2, r,$ and $G$ we can calculate the time for one orbit that better be close to $365$ days 
 """
+
+# ╔═╡ 35b48969-7aa2-4592-a84c-5d7e1be21018
+
 
 # ╔═╡ 75f96237-a5f3-4f95-afa2-e1139ad0afc7
 begin
@@ -2924,6 +2927,7 @@ version = "1.13.0+0"
 # ╔═╡ Cell order:
 # ╟─9d2c074d-3a3f-4ec5-8cde-5b6eab7a9d99
 # ╟─510d9158-2574-11f1-998c-954ac65d7cdf
+# ╠═35b48969-7aa2-4592-a84c-5d7e1be21018
 # ╟─75f96237-a5f3-4f95-afa2-e1139ad0afc7
 # ╟─264bb58e-74e2-4224-bdbc-f8351fc9512a
 # ╟─da533c3c-881b-4404-af42-a88fe36671fb
@@ -2932,7 +2936,7 @@ version = "1.13.0+0"
 # ╟─d3ac9188-0507-4baf-bed0-4966dc8d7707
 # ╟─89ac0a24-a533-474a-98c4-5f13c7bdaf38
 # ╠═64b2e35a-9b37-456b-a8f2-4a1097a09cc2
-# ╟─4f5bf48f-f387-43f4-984a-739bb7229dfd
+# ╠═4f5bf48f-f387-43f4-984a-739bb7229dfd
 # ╠═4f784b4e-10e0-448e-bb2b-4cfa0d9ebaa8
 # ╠═7bbaddb9-f677-4686-97ed-2bf1413095ed
 # ╠═2f1f2179-ad92-4e46-b58e-40f8688b372e

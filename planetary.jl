@@ -1,8 +1,9 @@
 using DifferentialEquations
-using Plots
+#using Plots
 using CairoMakie
 
-# Physical constants
+
+# 			Physical constants
 m_sun = 1.989e30      # kg
 m_earth = 5.972e24    # kg
 G = 6.674e-11
@@ -32,8 +33,8 @@ sol = solve(prob, RK4(), dt = 60*60*24)
 x = [sol.u[i][1]/AU for i in 1:length(sol.t)]
 y = [sol.u[i][2]/AU for i in 1:length(sol.t)]
 
-lines(0:0.01:2*3.1415, sin;linewidth=2)
-
+fig = lines(0:0.01:2*pi, sin;linewidth=2)
+display(fig)
 
 
 #plot(x, y, 

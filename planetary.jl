@@ -1,6 +1,6 @@
 using DifferentialEquations
 #using Plots
-using CairoMakie
+using GLMakie
 
 
 # 			Physical constants
@@ -11,7 +11,7 @@ r = 149.6e9
 AU = 1.496e11
 
 v = sqrt(G*m_sun/r)
-t = (2 * pi * r)/v
+t = (2 * π * r)/v
 
 println(t/(60*60*24))
 
@@ -33,7 +33,7 @@ sol = solve(prob, RK4(), dt = 60*60*24)
 x = [sol.u[i][1]/AU for i in 1:length(sol.t)]
 y = [sol.u[i][2]/AU for i in 1:length(sol.t)]
 
-fig = lines(0:0.01:2*pi, sin;linewidth=2)
+fig = lines(0:0.01:2*π, sin;linewidth=2)
 display(fig)
 
 

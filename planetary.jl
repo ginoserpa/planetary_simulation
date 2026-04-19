@@ -7,7 +7,7 @@ include("plotting.jl")
 # Define initial state and solve the ODE
 u0, t_span = get_initial_state()
 prob = ODEProblem(f!, u0, t_span)
-sol  = solve(prob, RK4(), dt = 60*60*24)
+sol  = solve(prob, RK4(), dt = days_to_seconds(1))
 
 
 time_years = sol.t ./ (60*60*24*365)

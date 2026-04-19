@@ -15,4 +15,4 @@ function get_initial_state()
 end
 
 years_to_seconds(years) = years * days_to_seconds(365)
-days_to_seconds(days)= days * 24 * 60 * 60
+days_to_seconds(days) = days * 24 * 60 * 60

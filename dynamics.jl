@@ -7,5 +7,13 @@ function f!(du, u, p, t)
 	du[4] = -G * m_sun * y / r^3
 end
 
-initial_state(r, v)= [r, 0.0, 0.0 , v]
-circular_speed(r) =  sqrt(G*m_sun / r)
+function get_initial_state()
+	v = sqrt(G*m_sun/r_earth)
+	u0 = [r_earth, 0.0, 0.0, v]
+	tspan = (0.0, years_to_seconds(10))
+	return u0, tspan
+end
+
+function years_to_seconds(years)
+	return years * 365 * 24 * 60 * 60
+end

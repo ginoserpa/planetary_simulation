@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: Julia ${{ matrix.julia-version }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version: ['1.11', '1.12']
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.julia-version }}
+
+      - name: Cache Julia artifacts and packages
+        uses: julia-actions/cache@v2
+
+      # GLMakie is a project dependency; even though verify.jl doesn't use it,
+      # Pkg.instantiate precompiles every dep in Project.toml. Provide the
+      # OpenGL / X11 system libraries and a virtual display so precompilation
+      # can succeed on a headless CI runner.
+      - name: Install GLMakie system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            xvfb xauth \
+            libgl1 libglu1-mesa libglx-mesa0 \
+            libxrandr2 libxinerama1 libxcursor1 libxi6 \
+            libxkbcommon0 libfontconfig1 libfreetype6 \
+            mesa-utils
+
+      - name: Instantiate project
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+
+      - name: Run verification script
+        run: xvfb-run -a julia --project=. verify.jl
+
+      - name: Assert leapfrog energy drift is bounded
+        run: |
+          xvfb-run -a julia --project=. -e '
+            include("constants.jl"); include("dynamics.jl")
+            using DifferentialEquations, OrdinaryDiffEq
+
+            x0, v0, tspan = get_initial_state_split()
+            prob = DynamicalODEProblem(f_vel!, f_pos!, v0, x0, tspan)
+            sol  = solve(prob, VerletLeapfrog(), dt = days_to_seconds(1))
+
+            energy(u) = 0.5*m_earth*(u.x[1][1]^2 + u.x[1][2]^2) -
+                        G*m_sun*m_earth / sqrt(u.x[2][1]^2 + u.x[2][2]^2)
+
+            E    = energy.(sol.u)
+            drift = maximum(abs.((E .- E[1]) ./ E[1]))
+            println("Max leapfrog energy drift over 10 yr = ", drift)
+
+            # Symplectic integrator must stay well under the ~0.85% RK4 drift.
+            @assert drift < 1e-6 "Leapfrog drift $(drift) exceeds 1e-6 threshold"
+          '
